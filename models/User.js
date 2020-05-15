@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const UserSchema = new mongoose.Schema({
 
     //regexin aloitusmerkki on ^ ja lopetusmerkki on $, niitä ennen tai jälkeen ei saa olla merkkejä
-    username: {type: String, unique: true, required: true},
+    userName: {type: String, unique: true, required: true, match: /^[A-Za-z]+([\ A-Za-z])/},
 
     password: {type: String, required: true},
 
