@@ -4,6 +4,8 @@ const TaskListSchema = require('./TaskList');
 
 const TaskSchema = new mongoose.Schema({
 
+    userName: { type: String, unique: true, required: true },
+
     activeTasks: { type: [TaskListSchema], required: false},
 
     taskHistory: {type: [TaskListSchema], required: false },
