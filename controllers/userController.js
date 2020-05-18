@@ -17,7 +17,7 @@ const UserController = {
         const hashedPassword = bcrypt.hashSync(req.body.password, 8);
 
         User.create({
-            username: req.body.username,
+            userName: req.body.username,
             password: hashedPassword,
             isadmin: req.body.isadmin,
         },
@@ -40,7 +40,7 @@ const UserController = {
     authenticateUser: function (req, res, next) {
         // etsitään käyttäjä kannasta http-pyynnöstä saadun käyttäjätunnuksen perusteella
         User.findOne({
-            username: req.body.username,
+            userName: req.body.username,
         }, function (err, user) {
             if (err) {
                 throw err;
@@ -62,6 +62,7 @@ const UserController = {
                     });
                 } else { // jos salasanat ovat samat, luodaan token
                     const token = createToken(user); // tokenin luontimetodi
+                    console.log(token);
                     // palautetaan token JSON-muodossa
                     res.json({
                         success: true,

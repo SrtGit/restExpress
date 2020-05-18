@@ -11,8 +11,9 @@ require('dotenv').config();
     vain tieto siitä onko käyttäjä admin. */
 function createToken(user) {
 
+    console.log(user);
     const payload = {
-        'username': user.username,
+        'username': user.userName,
         'isadmin': user.isadmin,
     }; // {'username':'tuito', 'isadmin': true}
     console.log(payload);

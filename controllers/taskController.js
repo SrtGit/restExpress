@@ -17,7 +17,7 @@ const taskController = {
         //Haetaan dataa mongo-kannasta
         Task.find({userName: req.params.username })
             .then((tasks) => {
-                res.json(tasks);
+                res.json(tasks.activeTasks);
             })
             .catch((err) => {
                 console.error(err);
