@@ -15,8 +15,9 @@ const taskController = require('../controllers/taskController');
 // const authorize = require('../verifytoken'); // authorisointi eli vahvistetaan token
 
 /* GET students. */
-router.get('/:username', taskController.findAll);
+router.get('/activeTasks/:username', taskController.getActiveTasks);
 
+router.get('/taskHistory/:username', taskController.getTaskHistory);
 // http://localhost:3000/students/scode/a1234
 // : on dynaamisen (muuttuvan) reitti-parametrin edessä
 router.post('/', taskController.add);
@@ -27,6 +28,8 @@ router.post('/addActiveTask/:username', taskController.addActiveTask);
 router.post('/addToTaskHistory/:username', taskController.addToTaskHistory);
 
 router.delete('/delActiveTask/:username/:activeTaskId', taskController.deleteActiveTask);
+
+router.delete('/delTaskFromHistory/:username/:activeTaskId', taskController.deleteTaskFromHistory);
 //router.get('/:id', taskController.findById);
 
 // POST toteutetaan juureen localhost:3000/students

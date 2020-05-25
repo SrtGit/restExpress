@@ -23,7 +23,10 @@ const UserController = {
         },
         (err, user) => {
             if (err) {
-                return res.status(500).send('Käyttäjän rekisteröinti epäonnistui.');
+                return res.json({
+                    success: false,
+                    message: 'Käyttäjää ei luotu',
+                });
             } else {
                 const token = createToken(user); // tokenin luontimetodi
                 // palautetaan token JSON-muodossa

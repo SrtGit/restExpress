@@ -12,12 +12,25 @@ const Task = require('../models/Task');
 
 const taskController = {
     //GET-pyynnön käyttämä metodi
-    findAll: (req, res) => {
+    getActiveTasks: (req, res) => {
 
         //Haetaan dataa mongo-kannasta
-        Task.find({userName: req.params.username })
+        Task.findOne({userName: req.params.username })
             .then((tasks) => {
+                console.log(tasks.activeTasks);
                 res.json(tasks.activeTasks);
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+    },
+
+    getTaskHistory: (req, res) => {
+        //Haetaan dataa mongo-kannasta
+        Task.findOne({userName: req.params.username })
+            .then((tasks) => {
+                console.log(tasks.taskHistory);
+                res.json(tasks.taskHistory);
             })
             .catch((err) => {
                 console.error(err);
@@ -69,11 +82,24 @@ const taskController = {
 
     deleteActiveTask: (req, res) => {
 
-        Task.update(
+        Task.updateOne(
             {userName: req.params.username},
             {$pull: { 'activeTasks': { _id: req.params.activeTaskId } }})
             .then((task) => {
-                res.json(task);
+                res.json('Task deleted from ActiveTasks');
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+    },
+
+    deleteTaskFromHistory: (req, res) => {
+
+        Task.updateOne(
+            {userName: req.params.username},
+            {$pull: { 'taskHistory': { _id: req.params.activeTaskId } }})
+            .then((task) => {
+                res.json('Task deleted from taskHistory');
             })
             .catch((err) => {
                 console.error(err);
@@ -87,11 +113,16 @@ const taskController = {
             userName: req.params.username,
         }, {
             $push: {activeTasks: req.body},
+        }, {
+            new: true,
+            upsert: true,
         })
             .then( () => {
-                res.send(`New course added to student with id`);
+                res.json(`New course added to student with id`);
             })
             .catch((err)=> console.log(err));
+
+
     },
 
     // id -> user-id
@@ -101,9 +132,12 @@ const taskController = {
             userName: req.params.username,
         }, {
             $push: {taskHistory: req.body},
+        }, {
+            new: true,
+            upsert: true,
         })
             .then( () => {
-                res.send(`New course added to student with id`);
+                res.json(`New task added to taskHistory`);
             })
             .catch((err)=> console.log(err));
     },
