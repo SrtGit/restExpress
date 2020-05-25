@@ -1,3 +1,13 @@
+/*
+Tämän sovelluksen tekemiseen on käytetty mallina Toimmi Tuikan backend kurssin restExpress sovellusta.
+Täysin tai lähes muuttamattomina on otettu käyttöön:
+    app.js,
+    createtoken.js,
+    verifytoken.js,
+    models/users.js,
+    controllers/userControlle.js,
+    routes/users.js
+*/
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
@@ -14,7 +24,7 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 const app = express();
 
-// Yhteys kantaan tämän voisi myös toteuttaa toisessa kansiossa
+// Yhteys kantaan. Tämän voisi myös toteuttaa toisessa kansiossa
 
 mongoose.connect( process.env.DB_CONN, {
     useCreateIndex: true,
